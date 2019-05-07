@@ -1,0 +1,100 @@
+{
+    "title": "DriveBC's Open511",
+    "description": "This API is DriveBC's implementation of the Open511 specification.  It provides information about known road events (traffic accidents, construction, etc.) in British Columbia, Canada.  Please note that you may experience issues when submitting requests to the delivery or test environment if using this [OpenAPI specification](https://github.com/bcgov/api-specs) in other API console viewers.",
+    "docsUrl": "http://api.open511.gov.bc.ca/help",
+    "url": "https://api.apis.guru/v2/specs/gov.bc.ca/open511/1.0.0/openapi.json",
+    "envVars": {},
+    "credentials": {
+        "fields": {
+            "server": {
+                "label": "Server",
+                "viewClass": "SelectView",
+                "model": [
+                    "http://api.open511.gov.bc.ca/",
+                    "https://api.open511.gov.bc.ca/",
+                    "--- Custom URL"
+                ],
+                "required": true
+            },
+            "otherServer": {
+                "label": "Custom Server URL",
+                "viewClass": "TextFieldView"
+            }
+        }
+    },
+    "triggers": {
+        "startFlow": {
+            "main": "./lib/triggers/startFlow.js",
+            "type": "polling",
+            "title": "Start Flow",
+            "fields": {}
+        }
+    },
+    "actions": {
+        "get_areas": {
+            "main": "./lib/actions/get_areas.js",
+            "title": "Lists the geographical areas (e.g. districts) that can be used to filter events.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/get_areas.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "get_events": {
+            "main": "./lib/actions/get_events.js",
+            "title": "Lists road events",
+            "description": "The events resource provides information about road events (e.g. accidents, construction, special events). The response is a list of event elements matching the filtering parameters if any are provided. ",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/get_events.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "get_jurisdiction": {
+            "main": "./lib/actions/get_jurisdiction.js",
+            "title": "Lists the jurisdictions publishing data through this Open511 API implementation",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/get_jurisdiction.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        },
+        "get_jurisdictiongeography": {
+            "main": "./lib/actions/get_jurisdictiongeography.js",
+            "title": "Provides the geographical boundaries for all the jurisdictions.",
+            "fields": {
+                "verbose": {
+                    "viewClass": "CheckBoxView",
+                    "label": "Debug this step (log more data)"
+                }
+            },
+            "metadata": {
+                "in": "./lib/schemas/get_jurisdictiongeography.in.json",
+                "out": {
+                    "type": "object"
+                }
+            }
+        }
+    }
+}
